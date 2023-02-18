@@ -1,31 +1,36 @@
 package com.driver.services;
 
 import com.driver.models.*;
-import com.driver.repositories.*;
+import com.driver.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ImageService {
-
+public class UserService {
     @Autowired
-    BlogRepository blogRepository2;
-    @Autowired
-    ImageRepository imageRepository2;
+    UserRepository userRepository3;
 
-    public Image addImage(Integer blogId, String description, String dimensions){
-        //add an image to the blog
-
+    public User createUser(String username, String password){
+        User user = new User(username, password);
+        userRepository3.save(user);
+        return user;
     }
 
-    public void deleteImage(Integer id){
-
+    public void deleteUser(int userId){
+        userRepository3.deleteById(userId);
     }
 
-    public int countImagesInScreen(Integer id, String screenDimensions) {
-        //Find the number of images of given dimensions that can fit in a screen having `screenDimensions`
-
+    public User updateUser(Integer id, String password)  {
+        User user;
+//        if(!userRepository3.findById(id).isPresent()) {
+//           throw new Exception();
+//        }
+        user = userRepository3.findById(id).get();
+        user.setPassword(password);
+        userRepository3.save(user);
+        return user;
     }
 }
